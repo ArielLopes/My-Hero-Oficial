@@ -1,0 +1,105 @@
+package com.ariellopes.myhero.domain;
+
+import java.sql.Date;
+
+public class Paciente {
+
+
+    private Integer id;
+	private String cpf;
+	private String nome;
+	private String telefone;
+	private double peso;
+	private double altura;
+	private Date dataDeNascimento;
+	private Integer tipoSanguinio;
+	private String email;
+	private String observacao;
+	
+	public Paciente() {
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(double peso) {
+		this.peso = peso;
+	}
+
+	public double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(double altura) {
+		this.altura = altura;
+	}
+
+	public Date getDataDeNascimento() {
+		return dataDeNascimento;
+	}
+
+	public void setDataDeNascimento(Date dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
+	}
+
+	public Integer getTipoSanguinio() {
+		return tipoSanguinio;
+	}
+
+	public void setTipoSanguinio(Integer tipoSanguinio) {
+		this.tipoSanguinio = tipoSanguinio;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+	
+	
+	
+	
+}

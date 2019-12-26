@@ -1,0 +1,67 @@
+package com.ariellopes.myhero.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Service;
+
+import com.ariellopes.myhero.domain.Paciente;
+import com.ariellopes.myhero.enuns.TipoSanguinio;
+import com.ariellopes.myhero.repositories.PacienteRepository;
+
+@Service
+public class PacienteService {
+
+	@Autowired
+	PacienteRepository repo;
+	
+	@Autowired
+	AlergiasRepository alergiasRepository;
+	
+	public Paciente findId(Integer id) {
+		Optional<Paciente> obj = repo.findById(id);
+		return obj.orElse(null);
+	}
+	
+	public List<Paciente> findAll() {
+		return repo.findAll();
+	}
+	
+	public Paciente insert (Paciente obj) {
+		
+		obj.setId(null);
+		obj = repo.save(obj);
+		return obj;
+	}
+	
+	public void delete(Integer id) {
+		findId(id);
+			repo.deleteById(id);
+		}	
+	
+	public Paciente fromDTO(PacienteDto objDto) {
+	       return new Paciente(objDto.getId() , objDto.getCpf() , objDto.getNome(), null, 0, 0, null, null, null, null);
+        }
+	
+	public Page<Paciente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
+
+	}
+	
+	public Paciente fromDTO(PacienteNewDTO objDto) {
+		Paciente cli = new Paciente(null, objDto.getCpf(), objDto.getNome(), objDto.getTelefone(), objDto.getPeso(), objDto.getAltura(), objDto.getDataDeNascimento(), objDto.getEmail(), TipoSanguinio.toEnum(objDto.getTipoSanguinio()), objDto.getObservacao());
+		
+		Alergia ale = new Alergia(objDto.getAlergiaId(), null);
+		
+		
+		cli.getAlergias().add(ale);
+		ale.getPaciente().add(cli);
+		
+		return cli;
+	}
+}

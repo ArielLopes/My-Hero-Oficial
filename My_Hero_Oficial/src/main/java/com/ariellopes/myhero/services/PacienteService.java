@@ -28,5 +28,14 @@ public class PacienteService {
 			repo.deleteById(id);
 		}	
 
+	//
+	
+	public Paciente update (Paciente obj) {
+		findId(obj.getId());
+		return repo.save(obj);
+	}
+		
+		//
+	
 
 }

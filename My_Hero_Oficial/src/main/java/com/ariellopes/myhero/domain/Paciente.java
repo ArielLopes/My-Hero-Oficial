@@ -1,12 +1,15 @@
 package com.ariellopes.myhero.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import com.ariellopes.myhero.enuns.TipoSanguinio;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Paciente implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+    
+	//Atributos
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,10 +35,20 @@ public class Paciente implements Serializable {
 	private String email;
 	private String observacao;
 	
+	//Relacionamento de tabelas tipo agregação
+	
+	
+	
+	@ManyToMany
+	private List<Alergia> alergias = new ArrayList<>();
+	
+	
+	//Constructor Vazio
 	public Paciente() {
 	}
 
 
+	//Constructor
 	public Paciente(Integer id, String cpf, String nome, String telefone, double peso, double altura,
 			Date dataDeNascimento, TipoSanguinio tipoSanguinio, String email, String observacao) {
 		super();
@@ -50,7 +64,7 @@ public class Paciente implements Serializable {
 		this.observacao = observacao;
 	}
 
-
+  //Metodos Especiais Get e Set
 	public Integer getId() {
 		return id;
 	}
@@ -132,6 +146,14 @@ public class Paciente implements Serializable {
 		this.observacao = observacao;
 	}
 
+	public List<Alergia> getAlergias() {
+		return alergias;
+	}
+
+
+	public void setAlergias(List<Alergia> alergias) {
+		this.alergias = alergias;
+	}
 
 	@Override
 	public int hashCode() {
@@ -158,8 +180,6 @@ public class Paciente implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 	
 }

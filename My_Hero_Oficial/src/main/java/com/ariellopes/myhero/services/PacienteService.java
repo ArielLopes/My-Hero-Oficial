@@ -14,8 +14,12 @@ public class PacienteService {
 	@Autowired
 	PacienteRepository repo;
 	
-	public Paciente findId(Integer id) {
+	public Paciente findById(Integer id) {
 		Optional<Paciente> obj = repo.findById(id);
+		return obj.orElse(null);
+	}
+	public Paciente findByCpf(String cpf) {
+		 Optional<Paciente> obj = repo.findByCpf(cpf);
 		return obj.orElse(null);
 	}
 	public Paciente insert (Paciente obj) {
@@ -24,18 +28,15 @@ public class PacienteService {
 	}
 	
 	public void delete(Integer id) {
-		findId(id);
+		findById(id);
 			repo.deleteById(id);
 		}	
-
-	//
 	
 	public Paciente update (Paciente obj) {
-		findId(obj.getId());
+		findById(obj.getId());
 		return repo.save(obj);
 	}
 		
-		//
 	
 
 }

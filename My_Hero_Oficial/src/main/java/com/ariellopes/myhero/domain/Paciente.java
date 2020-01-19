@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.ariellopes.myhero.enuns.Estados;
 import com.ariellopes.myhero.enuns.TipoSanguinio;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -25,6 +26,7 @@ public class Paciente implements Serializable {
 	
 	private String cpf;
 	private String nome;
+	private boolean doadorDeOrgao;
 	private String telefone;
 	private double peso;
 	private double altura;
@@ -32,6 +34,7 @@ public class Paciente implements Serializable {
 	@JsonFormat(pattern ="dd/MM/yyyy")
 	private Date dataDeNascimento;
 	private Integer tipoSanguinio;
+	private Integer estado;
 	private String email;
 	private String observacao;
 	
@@ -40,8 +43,13 @@ public class Paciente implements Serializable {
 	
 	
 	@ManyToMany
-	private List<Alergia> alergias = new ArrayList<>();
+	private List<Alergia> alergia = new ArrayList<>();
 	
+	@ManyToMany
+	private List<Doenca> doenca = new ArrayList<>();
+	
+	@ManyToMany
+	private List<Medicamento> medicamento = new ArrayList<>();
 	
 	//Constructor Vazio
 	public Paciente() {
@@ -49,17 +57,19 @@ public class Paciente implements Serializable {
 
 
 	//Constructor
-	public Paciente(Integer id, String cpf, String nome, String telefone, double peso, double altura,
-			Date dataDeNascimento, TipoSanguinio tipoSanguinio, String email, String observacao) {
+	public Paciente(Integer id, String cpf, String nome,boolean doadorDeOrgao,  String telefone, double peso, double altura,
+			Date dataDeNascimento, TipoSanguinio tipoSanguinio, Estados estado, String email, String observacao) {
 		super();
 		this.id = id;
 		this.cpf = cpf;
 		this.nome = nome;
+		this.doadorDeOrgao = doadorDeOrgao;
 		this.telefone = telefone;
 		this.peso = peso;
 		this.altura = altura;
 		this.dataDeNascimento = dataDeNascimento;
 		this.tipoSanguinio = tipoSanguinio.getCod();
+		this.estado = estado.getCod();
 		this.email = email;
 		this.observacao = observacao;
 	}
@@ -88,6 +98,16 @@ public class Paciente implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public boolean isDoadorDeOrgao() {
+		return doadorDeOrgao;
+	}
+
+
+	public void setDoadorDeOrgao(boolean doadorDeOrgao) {
+		this.doadorDeOrgao = doadorDeOrgao;
+	}
+
 
 	public String getTelefone() {
 		return telefone;
@@ -129,6 +149,14 @@ public class Paciente implements Serializable {
 	public void setTipoSanguinio(TipoSanguinio tipoSanguinio) {
 		this.tipoSanguinio = tipoSanguinio.getCod();
 	}
+	
+	public Estados getEstado() {
+		return Estados.toEnum(estado);
+	}
+	
+	public void setEstado(Estados estado) {
+	   this.estado = estado.getCod();	
+	}
 
 	public String getEmail() {
 		return email;
@@ -146,14 +174,35 @@ public class Paciente implements Serializable {
 		this.observacao = observacao;
 	}
 
-	public List<Alergia> getAlergias() {
-		return alergias;
+	public List<Alergia> getAlergia() {
+		return alergia;
 	}
 
 
-	public void setAlergias(List<Alergia> alergias) {
-		this.alergias = alergias;
+	public void setAlergia(List<Alergia> alergia) {
+		this.alergia = alergia;
 	}
+
+
+	public List<Doenca> getDoenca() {
+		return doenca;
+	}
+
+
+	public void setDoenca(List<Doenca> doenca) {
+		this.doenca = doenca;
+	}
+
+
+	public List<Medicamento> getMedicamento() {
+		return medicamento;
+	}
+
+
+	public void setMedicamento(List<Medicamento> medicamento) {
+		this.medicamento = medicamento;
+	}
+
 
 	@Override
 	public int hashCode() {

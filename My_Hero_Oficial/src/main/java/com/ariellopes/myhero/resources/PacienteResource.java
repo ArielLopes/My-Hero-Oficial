@@ -33,7 +33,7 @@ public class PacienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@GetMapping
+	//@GetMapping
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Paciente> foundByCpf(@RequestParam("codigo-paciente") String cpf){   
 		Paciente obj = pacienteService.findByCpf(cpf);

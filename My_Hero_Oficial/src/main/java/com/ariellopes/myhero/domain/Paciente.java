@@ -9,11 +9,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 import com.ariellopes.myhero.enuns.Estados;
 import com.ariellopes.myhero.enuns.TipoSanguinio;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Paciente implements Serializable {
@@ -39,9 +47,15 @@ public class Paciente implements Serializable {
 	private String observacao;
 	
 	//Relacionamento de tabelas tipo agregação
-	
-	
-	
+
+
+
+	@OneToMany
+	@JoinColumn(name = "paciente_id")
+	@Cascade(CascadeType.ALL)
+	private List<ContatoDeEmergencia> contatoDeEmergencias = new ArrayList<>();
+
+
 	@ManyToMany
 	private List<Alergia> alergia = new ArrayList<>();
 	
@@ -201,6 +215,16 @@ public class Paciente implements Serializable {
 
 	public void setMedicamento(List<Medicamento> medicamento) {
 		this.medicamento = medicamento;
+	}
+
+
+	public List<ContatoDeEmergencia> getContatoDeEmergencias() {
+		return contatoDeEmergencias;
+	}
+
+
+	public void setContatoDeEmergencias(List<ContatoDeEmergencia> contatoDeEmergencias) {
+		this.contatoDeEmergencias = contatoDeEmergencias;
 	}
 
 

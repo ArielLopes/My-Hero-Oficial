@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ariellopes.myhero.domain.Paciente;
+import com.ariellopes.myhero.repositories.ContatoDeEmergenciaRepository;
 import com.ariellopes.myhero.services.PacienteService;
 
 @RestController
 @RequestMapping(value = "pacientes")
 public class PacienteResource {
 	
-	
 	@Autowired
-	PacienteService pacienteService;
+	private PacienteService pacienteService;
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Paciente> findById(@PathVariable Integer id) {
@@ -42,6 +42,7 @@ public class PacienteResource {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert (@RequestBody Paciente obj){
+
 		obj = pacienteService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 			      .path("/{id}").buildAndExpand(obj.getId()).toUri();

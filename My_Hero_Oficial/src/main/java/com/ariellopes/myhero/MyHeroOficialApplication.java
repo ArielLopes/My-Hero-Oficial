@@ -9,15 +9,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.ariellopes.myhero.domain.Alergia;
+import com.ariellopes.myhero.domain.ContatoDeEmergencia;
 import com.ariellopes.myhero.domain.Doenca;
-import com.ariellopes.myhero.domain.LocalDeMoradia;
 import com.ariellopes.myhero.domain.Medicamento;
 import com.ariellopes.myhero.domain.Paciente;
 import com.ariellopes.myhero.enuns.Estados;
 import com.ariellopes.myhero.enuns.TipoSanguinio;
 import com.ariellopes.myhero.repositories.AlergiaRepository;
+import com.ariellopes.myhero.repositories.ContatoDeEmergenciaRepository;
 import com.ariellopes.myhero.repositories.DoencaRepository;
-import com.ariellopes.myhero.repositories.LocalDeMoradiaRepository;
 import com.ariellopes.myhero.repositories.MedicamentoRepository;
 import com.ariellopes.myhero.repositories.PacienteRepository;
 
@@ -39,10 +39,10 @@ public class MyHeroOficialApplication implements CommandLineRunner {
 	
 	@Autowired
 	private MedicamentoRepository medicamentoRepository;
-	
-	@Autowired
-	private LocalDeMoradiaRepository localDeMoradiaRepository;
     
+	@Autowired
+	private ContatoDeEmergenciaRepository contatoDeEmergenciaRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -50,8 +50,8 @@ public class MyHeroOficialApplication implements CommandLineRunner {
 	
 	
 	//Criar Teste de Paciente para salvar no BD H2
-	Paciente p1 = new Paciente(null, "000.000.000-00", "Ariel Lopes", true, "(67) 99999-9999", 85.5, 1.79, sdf.parse("09/10/1994"), TipoSanguinio.O_NEGATIVO ,Estados.MATO_GROSSO_DO_SUL ,"ariel-edit@hotmail.com", "Teste Campo Observação");	
-	Paciente p2 = new Paciente(null, "111.111.111-11", "Simone Lima", false, "(67) 99999-9999", 72.0, 1.50, sdf.parse("10/10/1982"), TipoSanguinio.AB_NEGATIVO,Estados.RIO_GRANDE_DO_SUL, "simone.luiza@gmail.com", "");
+	Paciente p1 = new Paciente(1, "000.000.000-00", "Ariel Lopes", true, "(67) 99999-9999", 85.5, 1.79, sdf.parse("09/10/1994"), TipoSanguinio.O_NEGATIVO ,Estados.MATO_GROSSO_DO_SUL ,"ariel-edit@hotmail.com", "Teste Campo Observação");
+	Paciente p2 = new Paciente(2, "111.111.111-11", "Simone Lima", false, "(67) 99999-9999", 72.0, 1.50, sdf.parse("10/10/1982"), TipoSanguinio.AB_NEGATIVO,Estados.RIO_GRANDE_DO_SUL, "simone.luiza@gmail.com", "");
 
 	
 
@@ -85,6 +85,10 @@ public class MyHeroOficialApplication implements CommandLineRunner {
 	Medicamento medicamento6 = new Medicamento(null, "Puran T4");
 	
 
+	//Criando Medicamentos  para salvar no BD H2
+	ContatoDeEmergencia contato1 = new ContatoDeEmergencia(null, "Mae", "Fatima lopes", "9999999999");
+	ContatoDeEmergencia contato2 = new ContatoDeEmergencia(null, "Irma", "Camila", "555555555555");
+	ContatoDeEmergencia contato3 = new ContatoDeEmergencia(null, "vó", "Maria", "6733333333" );
 
 	
 	
@@ -118,14 +122,22 @@ public class MyHeroOficialApplication implements CommandLineRunner {
 	p2.getMedicamento().add(medicamento5);
 	p2.getMedicamento().add(medicamento6);
 	
+	//Relacionando Contato de Emergencia ao Paciente
 	
+	p1.getContatoDeEmergencias().add(contato1);
+	p1.getContatoDeEmergencias().add(contato2);
+	p2.getContatoDeEmergencias().add(contato3);
 	
 	//Salvar no Repositories
 	alergiaRepository.saveAll(Arrays.asList(aler1, aler2, aler3, aler4, aler5, aler6, aler7, aler8, aler9, aler10));
 	doencaRepository.saveAll(Arrays.asList(doenca1, doenca2, doenca3, doenca4, doenca5, doenca6, doenca7));
 	medicamentoRepository.saveAll(Arrays.asList(medicamento1, medicamento2 ,medicamento3 ,medicamento4 ,medicamento5, medicamento6));
+
+
+		contatoDeEmergenciaRepository.saveAll(Arrays.asList(contato1, contato2 , contato3));
+		pacienteRepository.saveAll(Arrays.asList(p1, p2));
 	
-	pacienteRepository.saveAll(Arrays.asList(p1, p2));
+
 	
 	
 	
